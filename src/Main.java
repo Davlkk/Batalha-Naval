@@ -20,10 +20,10 @@ public class Main {
 
         if (jogador == 2) {
             System.out.print("Deseja continuar contra outro jogador? (S/N) ");
-            String opcJogador = ler.next().toLowerCase();
-            if (opcJogador.equals("n"))
+            char opcJogador = ler.next().toLowerCase().charAt(0);
+            if (opcJogador == 'n')
                 menuIniciar();
-            else if (opcJogador.equals("s"))
+            else if (opcJogador == 's')
                 jogadores();
             else{
                 System.out.println("Erro! Tente novamente.");
@@ -31,13 +31,14 @@ public class Main {
             }
         }
         else if (jogador == 1)
-            System.out.println("falta parte.");
+            System.out.println("falta parte."); //aqui vai o método para jogar com a máquina
         else{
-            System.out.println("Opção inválida. Tente novamente.");
+            System.out.println("Opção inválida! Tente novamente.");
             menuIniciar();
         }
     }
 
+    //métodos dos jogadores
     public static void jogadores() {
         System.out.print("Nome do primeiro jogador: ");
         String nomeJ1 = ler.next().toLowerCase();
@@ -47,37 +48,47 @@ public class Main {
 
         System.out.println("\n" + nomeJ1 + " VS " + nomeJ2 + "!!\n");
 
-        System.out.print(nomeJ1+" deseja colocar os barcos manualmente (1) ou adiciona-los automaticamente (2)? ");
-        int opcAlocarJ1 = ler.nextInt();
-        if(opcAlocarJ1 == 1){
-            System.out.println("Aloque seus barcos " + nomeJ1 + ": ");
-            iniciarTabuleiro();
-            exibirTabuleiro(false);
-            alocarBarcos();
-        } else if (opcAlocarJ1 == 2) {
-            System.out.println("Alocando automaticamente...");
-            iniciarTabuleiro();
-            alocarBarcosAutomaticamente();
-            exibirTabuleiro(false);
-        }
+        alocarJogadores(nomeJ1);
 
         System.out.println("Troque de jogador. Agora é a vez de " + nomeJ2 + "!\n");
 
-        System.out.print(nomeJ2+" deseja colocar os barcos manualmente (1) ou adiciona-los automaticamente (2)? ");
-        int opcAlocarJ2 = ler.nextInt();
-        if(opcAlocarJ2 == 1){
-            System.out.println("Aloque seus barcos " + nomeJ2 + ": ");
-            iniciarTabuleiro();
-            exibirTabuleiro(false);
-            alocarBarcos();
-        } else if (opcAlocarJ2 == 2) {
-            System.out.println("Alocando automaticamente...");
-            iniciarTabuleiro();
-            alocarBarcosAutomaticamente();
-            exibirTabuleiro(false);
-        }
+        alocarJogadores(nomeJ2);
 
         System.out.println("Barcos alocados!");
+    }
+
+    private static void alocarJogadores(String nome){
+        System.out.print(nome+", deseja colocar os barcos manualmente (1) ou adiciona-los automaticamente (2)? ");
+        int alocarJogador = ler.nextInt();
+
+        if(alocarJogador == 1){
+            System.out.print(nome+", deseja continuar com a alocação manual? (S/N) ");
+            char opcAlocar = ler.next().toLowerCase().charAt(0);
+            if(opcAlocar == 'n')
+                alocarJogadores(nome);
+            else if (opcAlocar == 's'){
+                System.out.println("Aloque seus barcos " + nome + ": ");
+                iniciarTabuleiro();
+                exibirTabuleiro(false);
+                alocarBarcos();
+            }
+            else{
+                System.out.println("Opção Inválida Tente Novamente.");
+            }
+        }
+
+        else if (alocarJogador == 2) {
+            System.out.print(nome+", deseja continuar com a alocação automática? (S/N) ");
+            char opcAlocar = ler.next().toLowerCase().charAt(0);
+            if(opcAlocar == 'n')
+                alocarJogadores(nome);
+            else if (opcAlocar == 's'){
+                System.out.println("Alocando automaticamente...");
+                iniciarTabuleiro();
+                alocarBarcosAutomaticamente();
+                exibirTabuleiro(false);
+            }
+        }
     }
 
     //métodos do tabuleiro
@@ -102,7 +113,7 @@ public class Main {
         System.out.println();
 
         for (int l = 1; l < tamanho; l++) {
-            System.out.printf("%02d ", l);
+            System.out.print((char)('A' + l - 1) + "  ");
             for (int c = 1; c < tamanho; c++) {
                 char simbolo = tabuleiro[l][c];
                 if (esconderNavios && simbolo == navio) {
@@ -147,7 +158,7 @@ public class Main {
 
             while (!alocado) {
                 System.out.println("\nAlocando navio de tamanho " + tamanhoBarco);
-                System.out.print("Informe a linha inicial (1 a 10): ");
+                System.out.print("Informe a linha inicial (A a J): ");
                 int linha = ler.nextInt();
 
                 System.out.print("Informe a coluna inicial (1 a 10): ");
