@@ -31,9 +31,9 @@ public class Main {
             }
         }
         else if (jogador == 1)
-            System.out.println("Modo contra a máquina ainda não implementado.");
+            System.out.println("falta parte.");
         else{
-            System.out.println("Opção inválida.");
+            System.out.println("Opção inválida. Tente novamente.");
             menuIniciar();
         }
     }
@@ -96,7 +96,7 @@ public class Main {
 
     public static void exibirTabuleiro(boolean esconderNavios) {
         System.out.print("  ");
-        for (int l = 1; l < tamanho; l++) {
+        for (int l = 1; l < tamanho; l++){
             System.out.printf("%02d ", l);
         }
         System.out.println();
