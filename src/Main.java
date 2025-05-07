@@ -133,14 +133,18 @@ public class Main {
             return false;
 
         if (direcao == 'H') {
-            if (coluna + tamanhoBarco - 1 >= tamanho) return false;
+            if (coluna + tamanhoBarco - 1 >= tamanho)
+                return false;
             for (int c = 0; c < tamanhoBarco; c++) {
-                if (tabuleiro[linha][coluna + c] != agua) return false;
+                if (tabuleiro[linha][coluna + c] != agua)
+                    return false;
             }
         } else if (direcao == 'V') {
-            if (linha + tamanhoBarco - 1 >= tamanho) return false;
+            if (linha + tamanhoBarco - 1 >= tamanho)
+                return false;
             for (int l = 0; l < tamanhoBarco; l++) {
-                if (tabuleiro[linha + l][coluna] != agua) return false;
+                if (tabuleiro[linha + l][coluna] != agua)
+                    return false;
             }
         } else {
             return false;
