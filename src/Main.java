@@ -71,7 +71,6 @@ public class Main {
             }
         }
 
-
         else if (jogador == 1) {
             System.out.print("Deseja continuar contra a máquina? (S/N) ");
             char opcJogador = ler.next().toLowerCase().charAt(0);
@@ -230,26 +229,26 @@ public class Main {
                 System.out.println("\nAlocando navio de tamanho " + tamanhoBarco);
                 System.out.print("Informe a linha inicial (A a J): ");
                 char linhaChar = ler.next().toUpperCase().charAt(0);
-                int linha = linhaChar - 'A' + 1;
+                int l = linhaChar - 'A' + 1;
 
                 System.out.print("Informe a coluna inicial (1 a 10): ");
-                int coluna = ler.nextInt();
+                int c = ler.nextInt();
 
                 System.out.print("Direção (H para horizontal, V para vertical): ");
                 char direcao = ler.next().toUpperCase().charAt(0);
 
-                if (podeAlocar(tabuleiro, linha, coluna, tamanhoBarco, direcao)) {
+                if (podeAlocar(tabuleiro, l, c, tamanhoBarco, direcao)) {
                     naviosJogador[i] = new int[tamanhoBarco][2];
 
-                    for (int j = 0; j < tamanhoBarco; j++) {
+                    for (int s = 0; s < tamanhoBarco; s++) {
                         if (direcao == 'H') {
-                            tabuleiro[linha][coluna + j] = navio;
-                            naviosJogador[i][j][0] = linha;
-                            naviosJogador[i][j][1] = coluna + j;
+                            tabuleiro[l][c + s] = navio;
+                            naviosJogador[i][s][0] = l;
+                            naviosJogador[i][s][1] = c + s;
                         } else {
-                            tabuleiro[linha + j][coluna] = navio;
-                            naviosJogador[i][j][0] = linha + j;
-                            naviosJogador[i][j][1] = coluna;
+                            tabuleiro[l + s][c] = navio;
+                            naviosJogador[i][s][0] = l + s;
+                            naviosJogador[i][s][1] = c;
                         }
                     }
 
@@ -371,19 +370,19 @@ public class Main {
         }
     }
 
-    public static int[] atacar(char[][] tabuleiro, int linha, int coluna, int[][][] navios, int[] segmentosNavios) {
+    public static int[] atacar(char[][] tabuleiro, int l, int c, int[][][] navios, int[] segmentosNavios) {
         int[] resultado = new int[2];
 
-        if (tabuleiro[linha][coluna] == navio) {
-            tabuleiro[linha][coluna] = acerto;
+        if (tabuleiro[l][c] == navio) {
+            tabuleiro[l][c] = acerto;
             resultado[0] = 1;
 
             int navioAtingido = -1;
 
             for (int i = 0; i < navios.length; i++) {
                 boolean encontrou = false;
-                for (int j = 0; j < navios[i].length && !encontrou; j++) {
-                    if (navios[i][j][0] == linha && navios[i][j][1] == coluna) {
+                for (int s = 0; s < navios[i].length && !encontrou; s++) {
+                    if (navios[i][s][0] == l && navios[i][s][1] == c) {
                         navioAtingido = i;
                         encontrou = true;
                     }
@@ -395,10 +394,8 @@ public class Main {
                     resultado[1] = 1;
                 }
             }
-        }
-
-        else {
-            tabuleiro[linha][coluna] = erro;
+        } else {
+            tabuleiro[l][c] = erro;
             resultado[0] = 0;
         }
 
