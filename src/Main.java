@@ -127,37 +127,10 @@ public class Main {
         System.out.println();
     }
 
-    public static boolean podeAlocar(int linha, int coluna, int tamanhoBarco, char direcao) {
-        //confirmação de posição, se tiver tudo de acordo, segue o código, senão retorna ao início.
-        if (linha < 1 || linha >= tamanho || coluna < 1 || coluna >= tamanho)
-            return false;
-
-        if (direcao == 'H') {
-            if (coluna + tamanhoBarco - 1 >= tamanho)
-                return false;
-            for (int c = 0; c < tamanhoBarco; c++) {
-                if (tabuleiro[linha][coluna + c] != agua)
-                    return false;
-            }
-        } else if (direcao == 'V') {
-            if (linha + tamanhoBarco - 1 >= tamanho)
-                return false;
-            for (int l = 0; l < tamanhoBarco; l++) {
-                if (tabuleiro[linha + l][coluna] != agua)
-                    return false;
-            }
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
     public static void alocarBarcos() {
         int[] tamanhos = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
 
-        for (int i = 0; i < tamanhos.length; i++) {
-            int tamanhoBarco = tamanhos[i];
+        for (int tamanhoBarco : tamanhos) {
             boolean alocado = false;
 
             while (!alocado) {
@@ -211,5 +184,31 @@ public class Main {
                 }
             }
         }
+    }
+
+    public static boolean podeAlocar(int linha, int coluna, int tamanhoBarco, char direcao) {
+        //confirmação de posição, se tiver tudo de acordo, segue o código, senão retorna ao início.
+        if (linha < 1 || linha >= tamanho || coluna < 1 || coluna >= tamanho)
+            return false;
+
+        if (direcao == 'H') {
+            if (coluna + tamanhoBarco - 1 >= tamanho)
+                return false;
+            for (int c = 0; c < tamanhoBarco; c++) {
+                if (tabuleiro[linha][coluna + c] != agua)
+                    return false;
+            }
+        } else if (direcao == 'V') {
+            if (linha + tamanhoBarco - 1 >= tamanho)
+                return false;
+            for (int l = 0; l < tamanhoBarco; l++) {
+                if (tabuleiro[linha + l][coluna] != agua)
+                    return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }
